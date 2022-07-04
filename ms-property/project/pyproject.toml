@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "ms-project"
+version = "0.1.0"
+description = ""
+authors = ["Diego Quiroz <diego00aq@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^0.20.0"
+mysql-connector-python = "^8.0.29"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | migrations
+  | wsgi.py
+  | manage.py
+)/
+'''
