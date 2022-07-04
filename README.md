@@ -9,6 +9,9 @@ In this repo you can find the code for the two microservices, they're in the sam
 Database connection will be made using MySQL official connector library.
 I want to create a model object to handle queries from database, like most ORMs (e.g. Django Queryset) do.
 
+**Update:**
+The code of the models is there, but I didn't had enough time to implement the use of the model instead of a dictionary.
+
 ### Server
 Server will work with socketserver library and all requests will be handled using SimpleHttpRequest from http python library.
 
@@ -16,6 +19,9 @@ Server will work with socketserver library and all requests will be handled usin
 The code is OK, but I don't think is the right solution. I'll try to update the server to use wsgi, for this I really want to use something as uvicorn or gunicorn as toolkit, but I think is kind of debatible if they are frameworks or not, so I'll try a bare wsgi implementation.
 
 The issue is that I don't have enough time to finish this, so I'll focus on the logic and fix the server later.
+
+**Update 2:**
+At the end I did had time to implement a better WSGI server with Gunicorn, code is still messy but the server and request manipulation are simplier.
 
 ### Routing
 I'll manage routing using a for loop on all urls.
