@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ms-project"
+name = "ms-property"
 version = "0.1.0"
 description = ""
 authors = ["Diego Quiroz <diego00aq@gmail.com>"]
