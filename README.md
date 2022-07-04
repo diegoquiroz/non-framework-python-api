@@ -3,6 +3,28 @@ This project is going to use no frameworks. This means server will work on top o
 
 In this repo you can find the code for the two microservices, they're in the same repo for distribution purposes but I'm treating them as separate projects, that's why they have their own compose file.
 
+## How to run?
+To run properties microservice just need to clone the repo and start the containers with compose.
+
+```
+docker compose build
+docker compose up -d
+
+// Now enter the container
+docker compose exec ms-property bash
+```
+Copy the .env.example and fill it with your db credentials.
+```
+cp ms-property/project/.env.example ms-property/project/.env
+```
+
+And run the app server
+```
+cd ms_property
+gunicorn server:app -b 0.0.0.0
+```
+And done, the properties endpoint is running on `http://localhost/properties?limit=10`
+
 ## Technologies 
 
 ### Database
@@ -11,6 +33,8 @@ I want to create a model object to handle queries from database, like most ORMs 
 
 **Update:**
 The code of the models is there, but I didn't had enough time to implement the use of the model instead of a dictionary.
+
+Also the code is vulnerable to sql injection.
 
 ### Server
 Server will work with socketserver library and all requests will be handled using SimpleHttpRequest from http python library.
