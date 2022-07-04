@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  ms-property:
+    container_name: habi-property
+    build: .
+    volumes:
+      - ./project:/app
+    ports:
+      - 8000:8000
