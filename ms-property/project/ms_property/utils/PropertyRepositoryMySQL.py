@@ -3,7 +3,7 @@ from .connection import connection
 
 class PropertyRepositoryMySQL:
     def list(**filters) -> list:
-        query = '''SELECT p.* FROM property p
+        query = '''SELECT p.*, sh.status_id as status FROM property p
             LEFT JOIN (
                 select sh.* from status_history sh
                 where (sh.update_date, sh.id) = (
@@ -24,13 +24,14 @@ class PropertyRepositoryMySQL:
         cursor = connection.cursor()
         cursor.execute(query)
         properties = []
-        for (id, address, city, price, description, year) in cursor:
+        for (id, address, city, price, description, year, status) in cursor:
             properties.append({
                 'id': id,
                 'address': address,
                 'city': city,
                 'price': price,
                 'description': description,
-                'year': year
+                'year': year,
+                'status': status
             })
         return properties

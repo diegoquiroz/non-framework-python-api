@@ -1,34 +1,26 @@
-import socketserver
-from http import HTTPStatus
-from http.server import SimpleHTTPRequestHandler
-from urllib.parse import urlparse, parse_qs
-from urls import urlpatterns
-
 import sys
 
 sys.path.append('./')
+from http import HTTPStatus
+from urls import urlpatterns
+from webob import Request, Response
 
 
-class Handler(SimpleHTTPRequestHandler):
+class API:
+    def __call__(self, environ, start_response):
+        request = Request(environ)
+        response = self.handle_request(request)
+        return response(environ, start_response)
 
-    def do_GET(self):
-        parsed_path = urlparse(self.path)
-        query = parse_qs(parsed_path.query)
-        query = {key: query[key][0] for key in query}
-        for (path, callback) in urlpatterns:
-            if parsed_path.path == path:
-                self.send_response(HTTPStatus.OK)
-                self.send_header("Content-Type", "application/json")
-                self.end_headers()
-                self.wfile.write(callback.get(query))
+    def handle_request(self, request):
+        response = Response()
+        for (path, handler) in urlpatterns:
+            if request.path == path:
+                handler(request, response)
+                return response
+        response.status_code = HTTPStatus.NOT_FOUND
+        response.text = "Page not found"
+        return response
 
 
-if __name__ == "__main__":
-    PORT = 8000
-    server = socketserver.TCPServer(("0.0.0.0", PORT), Handler)
-    print(f"Server started at 0.0.0.0:{PORT}")
-    try:
-        server.serve_forever()
-    except Exception:
-        pass
-    server.server_close()
+app = API()
