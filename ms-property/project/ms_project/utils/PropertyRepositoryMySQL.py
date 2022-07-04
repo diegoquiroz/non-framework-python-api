@@ -14,11 +14,16 @@ class PropertyRepositoryMySQL:
             )
             AS sh
             ON p.id = sh.property_id
-            WHERE sh.status_id in (3,4,5);'''
+            WHERE sh.status_id in (3,4,5)'''
+        if filters:
+            for filter in filters:
+                if filter == 'limit':
+                    query += f' LIMIT {filters[filter]}'
+                else:
+                    query += f' AND {filter}={filters[filter]}'
         cursor = connection.cursor()
         cursor.execute(query)
         properties = []
-        __import__('pdb').set_trace()
         for (id, address, city, price, description, year) in cursor:
             properties.append({
                 'id': id,

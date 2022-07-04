@@ -10,5 +10,5 @@ class Property:
     description: Optional[str] = None
     year: Optional[int] = None
 
-    def filter(*args) -> list:
-        return PropertyRepositoryMySQL.list()
+    def filter(self, **kwargs: str) -> list:
+        return PropertyRepositoryMySQL.list(**kwargs)
